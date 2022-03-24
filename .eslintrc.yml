@@ -1,0 +1,35 @@
+env:
+  browser: true
+  es2021: true
+  jest: true
+
+extends:
+  - airbnb
+  - airbnb/hooks
+
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 12
+  sourceType: module
+
+plugins:
+  - react
+  - testing-library
+
+rules:
+  react/react-in-jsx-scope: "off"
+  react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx", "cjs","css", "jpg", "png", "svg"] }]
+  react/jsx-props-no-spreading: "off"
+  no-plusplus: ["error", { "allowForLoopAfterthoughts": true }]
+
+settings: {
+  "import/resolver": {
+    webpack,
+    "alias": {
+      "map": [
+        ["@", "./"],
+      ],
+    },
+  }
+}
