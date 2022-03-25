@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import uuid from 'react-uuid';
-import cloneDeep from 'lodash/cloneDeep';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Pagination, Select } from 'antd';
-import CourseCard from '@/components/cards/course';
+import CourseCard from '@/components/cards';
 import SearchCondition from '@/contexts/search/condition';
 import searchData from '@/datas/course';
 import searchActions from '@/redux/search/actions';
@@ -25,7 +23,7 @@ const PAGE_SIZE = 10;
 
 function SearchPage() {
   const dispatch = useDispatch();
-  const { courseData = [] } = useSelector((state) => state.search);
+  const { courseData = [], collectionItems = [] } = useSelector((state) => state.search);
 
   // filter condition and course data
   const [filterCourseData, setFilterCourseData] = useState(courseData ?? []);
@@ -120,12 +118,11 @@ function SearchPage() {
             break;
           }
         }
-        isPass = isPassTime;
+        isPass = ele.isEnsure === 0 ? false : isPassTime;
       }
 
       return isPass;
     });
-
     setFilterCourseData(newCourseData);
     return true;
   }, [courseData, filterCourseType, filterAcademyType, filterTime]);
@@ -134,24 +131,22 @@ function SearchPage() {
     onChangePage(1);
   }, [filterCourseData, onChangePage]);
 
-  // 目前還差 收集這邊更動狀態後會觸發上面的 useEffect 然後重新跑到第一頁的怪行為
-  // 最後處理的方法，我改為在 redux 另為一個 collection 集合，避免變更收藏就重新 render 整個頁面，浪費效能 （未完成）
-  const onChangeCollection = useCallback((courseName = '', isCollection = false) => {
-    // if (!courseName) return;
+  const onChangeCollection = useCallback((courseName = '') => {
+    if (!courseName) return;
 
-    // const courseItemIndex = courseData.findIndex((ele) => ele.courseName === courseName);
-    // if (courseItemIndex === -1) return;
-    // const newCourseData = cloneDeep(courseData);
-    // if (newCourseData[courseItemIndex]) {
-    //   newCourseData[courseItemIndex].isCollection = isCollection;
-    // }
+    const courseItemIndex = collectionItems.findIndex((ele) => ele === courseName);
 
-    // dispatch(
-    //   searchActions.setCourseItemIsCollection({
-    //     courseData: newCourseData,
-    //   }),
-    // );
-  }, [dispatch, courseData]);
+    let action = searchActions.deleteCollectionItems;
+    const collectionItemsSet = new Set(collectionItems);
+
+    if (courseItemIndex === -1) {
+      action = searchActions.addCollectionItems;
+      collectionItemsSet.add(courseName);
+    } else {
+      collectionItemsSet.delete(courseName);
+    }
+    dispatch(action({ collectionItems: [...collectionItemsSet] }));
+  }, [dispatch, collectionItems]);
 
   return (
     <SearchContainer>
@@ -192,6 +187,7 @@ function SearchPage() {
                   <CourseCard
                     {...ele}
                     key={ele.courseName}
+                    collectionItems={collectionItems}
                     onChangeCollection={onChangeCollection}
                   />
                 ))

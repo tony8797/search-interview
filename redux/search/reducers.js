@@ -4,6 +4,7 @@ const initState = {
   courseData: [],
   academyData: [],
   courseTypeData: [],
+  collectionItems: [],
 };
 
 export default function reducer(state = initState, action = '') {
@@ -15,10 +16,15 @@ export default function reducer(state = initState, action = '') {
         academyData: action.payload.academyData,
         courseTypeData: action.payload.courseTypeData,
       };
-    case actions.SET_COURSE_ITEM_IS_COLLECTION:
+    case actions.ADD_COLLECTION_ITEM:
       return {
         ...state,
-        courseData: action.payload.courseData,
+        collectionItems: action.payload.collectionItems,
+      };
+    case actions.DELETE_COLLECTION_ITEM:
+      return {
+        ...state,
+        collectionItems: action.payload.collectionItems,
       };
     default:
       return state;

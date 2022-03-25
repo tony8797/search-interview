@@ -23,7 +23,7 @@ const makeStore = ({ isServer }) => {
 
   const persistConfig = {
     key: 'nextjs',
-    whitelist: ['lottery'],
+    whitelist: ['search'],
     storage,
   };
 

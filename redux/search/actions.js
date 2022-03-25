@@ -1,6 +1,7 @@
 const actions = {
   SET_COURSE_DATA: 'SET_COURSE_DATA',
-  SET_COURSE_ITEM_IS_COLLECTION: 'SET_COURSE_ITEM_IS_COLLECTION',
+  ADD_COLLECTION_ITEM: 'ADD_COLLECTION_ITEM',
+  DELETE_COLLECTION_ITEM: 'DELETE_COLLECTION_ITEM',
   setCourseData: ({
     courseData = [],
     academyData = [],
@@ -13,12 +14,16 @@ const actions = {
       courseTypeData,
     },
   }),
-  setCourseItemIsCollection: ({
-    courseData,
-  }) => ({
-    type: actions.SET_COURSE_ITEM_IS_COLLECTION,
+  addCollectionItems: ({ collectionItems = [] }) => ({
+    type: actions.ADD_COLLECTION_ITEM,
     payload: {
-      courseData,
+      collectionItems,
+    },
+  }),
+  deleteCollectionItems: ({ collectionItems = [] }) => ({
+    type: actions.DELETE_COLLECTION_ITEM,
+    payload: {
+      collectionItems,
     },
   }),
 };
