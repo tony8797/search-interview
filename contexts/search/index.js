@@ -105,6 +105,7 @@ function SearchPage() {
     if (!filterCourseType.length && !filterAcademyType.length && !filterTime.length) {
       return;
     }
+
     const newCourseData = courseData.filter((ele) => {
       let isPass = true;
       if (
@@ -127,7 +128,6 @@ function SearchPage() {
       return isPass;
     });
     setFilterCourseData(newCourseData);
-    return true;
   }, [courseData, filterCourseType, filterAcademyType, filterTime]);
 
   useEffect(() => {
