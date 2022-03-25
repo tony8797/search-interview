@@ -102,6 +102,9 @@ function SearchPage() {
   };
 
   useEffect(() => {
+    if (!filterCourseType.length && !filterAcademyType.length && !filterTime.length) {
+      return;
+    }
     const newCourseData = courseData.filter((ele) => {
       let isPass = true;
       if (
