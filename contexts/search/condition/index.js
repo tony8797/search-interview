@@ -23,6 +23,7 @@ function SearchCondition({
   seFilterAcademyType,
   filterTime,
   setFilterTime,
+  hasCondition,
 }) {
   const { academyData = [], courseTypeData = [] } = useSelector((state) => state.search);
   const [isOpenCourse, setIsOpenCourse] = useState(true);
@@ -34,17 +35,23 @@ function SearchCondition({
       <SearchConditionContainer>
         <ResetCondition>
           <Col xs={8} className="reset-col reset-col-title">課程篩選條件</Col>
-          <Col
-            xs={4}
-            className="reset-col reset-col-button"
-            onClick={() => {
-              seFilterCourseType([], true);
-              seFilterAcademyType([], true);
-              setFilterTime([], true);
-            }}
-          >
-            全部清除
-          </Col>
+          {
+            hasCondition
+              ? (
+                <Col
+                  xs={4}
+                  className="reset-col reset-col-button"
+                  onClick={() => {
+                    seFilterCourseType([], true);
+                    seFilterAcademyType([], true);
+                    setFilterTime([], true);
+                  }}
+                >
+                  全部清除
+                </Col>
+              )
+              : null
+          }
         </ResetCondition>
         {
           courseTypeData?.length
@@ -161,6 +168,7 @@ SearchCondition.propTypes = {
   seFilterAcademyType: PropTypes.func,
   filterTime: PropTypes.oneOfType([PropTypes.array]),
   setFilterTime: PropTypes.func,
+  hasCondition: PropTypes.number,
 };
 
 SearchCondition.defaultProps = {
@@ -170,6 +178,7 @@ SearchCondition.defaultProps = {
   seFilterAcademyType: () => { },
   filterTime: [],
   setFilterTime: () => { },
+  hasCondition: 0,
 };
 
 export default SearchCondition;

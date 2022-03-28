@@ -169,6 +169,11 @@ function SearchPage() {
             seFilterCourseType={onChangeCourseType}
             seFilterAcademyType={onChangeAcademyType}
             setFilterTime={onChangeTime}
+            hasCondition={
+              filterCourseType?.length
+              || filterAcademyType?.length
+              || filterTime?.length
+            }
           />
         </Col>
         <Col xs={8} className="search-block">
