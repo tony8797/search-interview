@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
 import { FaChevronDown } from 'react-icons/fa';
 import searchData from '@/datas/course';
 import searchConditionStyle from '@/contexts/search/condition/index.style';
@@ -12,6 +13,7 @@ const {
   SearchConditionContainer,
   BlockList,
   Split,
+  ResetCondition,
 } = searchConditionStyle;
 
 function SearchCondition({
@@ -30,6 +32,20 @@ function SearchCondition({
   return (
     <>
       <SearchConditionContainer>
+        <ResetCondition>
+          <Col xs={8} className="reset-col reset-col-title">課程篩選條件</Col>
+          <Col
+            xs={4}
+            className="reset-col reset-col-button"
+            onClick={() => {
+              seFilterCourseType([], true);
+              seFilterAcademyType([], true);
+              setFilterTime([], true);
+            }}
+          >
+            全部清除
+          </Col>
+        </ResetCondition>
         {
           courseTypeData?.length
             ? (
@@ -53,7 +69,7 @@ function SearchCondition({
                               type="checkbox"
                               id={`academyData${ele.value}`}
                               label={`${ele.name} (${ele.courseTotal})`}
-                              isValid={filterCourseType.includes(ele.value)}
+                              checked={filterCourseType.includes(ele.value)}
                               onChange={() => seFilterCourseType(ele.value)}
                             />
                           </Box>
@@ -88,7 +104,7 @@ function SearchCondition({
                           type="checkbox"
                           id={`academyData${ele.firstCategoryUid}`}
                           label={`${ele.firstCategoryName} (${ele.courseTotal})`}
-                          isValid={filterAcademyType.includes(ele.firstCategoryUid)}
+                          checked={filterAcademyType.includes(ele.firstCategoryUid)}
                           onChange={() => seFilterAcademyType(ele.firstCategoryUid)}
                         />
                       </Box>
@@ -122,7 +138,7 @@ function SearchCondition({
                           type="checkbox"
                           id={`academyData${ele.value}`}
                           label={ele.name}
-                          isValid={filterTime.includes(ele.value)}
+                          checked={filterTime.includes(ele.value)}
                           onChange={() => setFilterTime(ele.value)}
                         />
                       </Box>

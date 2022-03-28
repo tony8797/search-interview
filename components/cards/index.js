@@ -53,7 +53,7 @@ function CourseCard({
           </Box>
           <span className="split-dot" />
           {
-            !isEnsure
+            !isEnsure || moment(classStartTime).diff(moment()) > 0
               ? (
                 <span>
                   {moment(classStartTime).format('YYYY/MM/DD')}

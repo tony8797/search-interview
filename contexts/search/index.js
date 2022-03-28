@@ -62,40 +62,46 @@ function SearchPage() {
     onChangePageData(newPage);
   }, [onChangePageData]);
 
-  const onChangeCourseType = (value = '') => {
+  const onChangeCourseType = (value = '', isClearCondition = false) => {
     if (!value) return;
     let newFilterCourseType = [];
 
-    if (filterCourseType.includes(value)) {
-      newFilterCourseType = filterCourseType.filter((ele) => ele !== value);
-    } else {
-      newFilterCourseType = [...filterCourseType, value];
+    if (!isClearCondition) {
+      if (filterCourseType.includes(value)) {
+        newFilterCourseType = filterCourseType.filter((ele) => ele !== value);
+      } else {
+        newFilterCourseType = [...filterCourseType, value];
+      }
     }
 
     seFilterCourseType(newFilterCourseType);
   };
 
-  const onChangeAcademyType = (value = '') => {
+  const onChangeAcademyType = (value = '', isClearCondition = false) => {
     if (!value) return;
     let newFilterAcademyType = [];
 
-    if (filterAcademyType.includes(value)) {
-      newFilterAcademyType = filterAcademyType.filter((ele) => ele !== value);
-    } else {
-      newFilterAcademyType = [...filterAcademyType, value];
+    if (!isClearCondition) {
+      if (filterAcademyType.includes(value)) {
+        newFilterAcademyType = filterAcademyType.filter((ele) => ele !== value);
+      } else {
+        newFilterAcademyType = [...filterAcademyType, value];
+      }
     }
 
     seFilterAcademyType(newFilterAcademyType);
   };
 
-  const onChangeTime = (value = '') => {
+  const onChangeTime = (value = '', isClearCondition = false) => {
     if (!value) return;
     let newFilterTime = [];
 
-    if (filterTime.includes(value)) {
-      newFilterTime = filterTime.filter((ele) => ele !== value);
-    } else {
-      newFilterTime = [...filterTime, value];
+    if (!isClearCondition) {
+      if (filterTime.includes(value)) {
+        newFilterTime = filterTime.filter((ele) => ele !== value);
+      } else {
+        newFilterTime = [...filterTime, value];
+      }
     }
 
     seFilterTime(newFilterTime);
@@ -103,6 +109,7 @@ function SearchPage() {
 
   useEffect(() => {
     if (!filterCourseType.length && !filterAcademyType.length && !filterTime.length) {
+      setFilterCourseData(courseData);
       return;
     }
 

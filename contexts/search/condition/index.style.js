@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { theme } from '@/themes/styles';
 
-const { neutral } = theme.color;
+const { neutral, primary } = theme.color;
 
 const SearchConditionContainer = styled(Row)`
   width: 90%;
@@ -57,8 +57,32 @@ const Split = styled(Col)`
   border-bottom: 1px solid ${neutral.gray4};
 `;
 
+const ResetCondition = styled(Row)`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+
+  .reset-col {
+    margin: 0;
+    padding: 0;
+  }
+
+  .reset-col-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .reset-col-button {
+    cursor: pointer;
+    color: ${primary.default};
+  }
+`;
+
 export default {
   SearchConditionContainer,
   BlockList,
   Split,
+  ResetCondition,
 };
